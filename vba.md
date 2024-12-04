@@ -37,7 +37,26 @@ Sub РасписаниеУчителя()
     
     ThisWorkbook.Save
     objShell.Run "cmd /K " & PyEXE & " " & PythonScript & " " & ThisWorkbook.FullName & " " & row & " " & col
-    Application.OnTime Now + TimeValue("00:00:05"), "ReOpen"
+    Application.OnTime Now + TimeValue("00:01:00"), "ReOpen"
+    ThisWorkbook.Close (False)
+End Sub
+
+' Расписание свободного кабинета
+Sub РасписаниеКабинета()
+    SetPath
+    Dim objShell As Object
+    Dim PythonScript As String
+    Dim row As Long, col As Long
+    row = ActiveCell.row
+    col = ActiveCell.Column
+    
+    Set objShell = VBA.CreateObject("Wscript.Shell")
+
+    PythonScript = PyScriptFolder & "mainScheCabinet.py"
+    
+    ThisWorkbook.Save
+    objShell.Run "cmd /K " & PyEXE & " " & PythonScript & " " & ThisWorkbook.FullName & " " & row & " " & col
+    Application.OnTime Now + TimeValue("00:00:30"), "ReOpen"
     ThisWorkbook.Close (False)
 End Sub
 
